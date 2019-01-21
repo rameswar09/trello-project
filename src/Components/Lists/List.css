@@ -1,0 +1,30 @@
+.list {
+  margin-top: 20px;
+  width: 20%;
+  height: auto;
+  border: 1px solid green;
+  display:inline-block;
+  margin: 20px;
+}
+.list-name{
+  margin-left: 10px;
+}
+.img{
+  float :right;
+  margin-right: 10px;
+}
+.deleteImg{
+  width: 20px;
+  height: 20px;
+}
+
+.add-list-text{
+  display: inline-block;
+  margin: 20px;
+  width: 19%;
+  height:40px;
+  border:0;
+  padding: 6px;
+  opacity: 0.6;
+  font-size: 15px;
+}
