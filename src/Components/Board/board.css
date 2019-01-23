@@ -1,6 +1,11 @@
 .board{
-  width: 100%;
+  max-width:inherit;
   height: 100%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  overflow-x: auto;
+  overflow-y: hidden;
   /* display: inline-block; */
+}
+.list-div{
+  display: inline-flex;
 }

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Board from './Components/Board/board.js'
 import './App.css';
-import './menu.png'
 class App extends Component {
   state={
-    image:require('./menu.png')
+    image:require('./image/menu.png')
   }
   render() {
     return (

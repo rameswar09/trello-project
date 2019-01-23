@@ -17,7 +17,10 @@ import List from './../Lists/List.js'
      return(
        <div className="board">
          <span>Board Name :<span/></span><span>{this.state.name}</span>
-         <List/>
+         <div className="List-div">
+            <List/>
+         </div>
+
        </div>
      )
    }
