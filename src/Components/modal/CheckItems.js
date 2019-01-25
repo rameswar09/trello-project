@@ -1,21 +1,11 @@
 import React ,{Component} from 'react'
 import './Modal.css'
-// import CheckBox from './checkbox.js'
 class checkItem extends Component{
   state={
     checkItemsData:this.props.cardData.checkItems,
     checkListId :this.props.cardData.id,
     addCheckItemName:"",
     delImage:require('./Delete.png')
-  }
-  async componentDidMount(){
-    let checkItemsData = await fetch('https://api.trello.com/1/checklists/'+this.state.checkListId+'/checkItems?key=aa1fdd28be75dfa535d1b8f9d84fee66&token=2b0ac5dfa7ec2a58f3b93046881b38e34433596433f8a3dc67a1d00724544ee2')
-    checkItemsData =await checkItemsData.json()
-    this.setState({
-      checkItemsData
-    })
-    console.log(checkItemsData);
-
   }
   addCheckItemsName=(e)=>{
     this.setState({addCheckItemName:e.target.value})
@@ -35,14 +25,53 @@ class checkItem extends Component{
     deleteCheckItemFromTheList = await deleteCheckItemFromTheList.json()
     console.log(deleteCheckItemFromTheList);
   }
+  changeState=async(e)=>{
+    console.log('hello');
+    if(e.state==="incomplete"){
+      console.log(e);
+      console.log('incomplete');
+        let changeStateOfcheckItem = await fetch('https://api.trello.com/1/cards/'+this.props.cardId+'/checkItem/'+e.id+'?state=complete&key=aa1fdd28be75dfa535d1b8f9d84fee66&token=2b0ac5dfa7ec2a58f3b93046881b38e34433596433f8a3dc67a1d00724544ee2',{method:'put'})
+         changeStateOfcheckItem =await changeStateOfcheckItem.json()
+         console.log(changeStateOfcheckItem);
+         console.log(this.state.checkItemsData);
+         let array=this.state.checkItemsData.map((item)=>{
+           if(item.id===e.id)
+           item.state=changeStateOfcheckItem.state
+           return item
+         })
+         console.log(array);
+         this.setState({
+           checkItemsData:array
+         })
+    }else{
+      console.log(e);
+      console.log('complete');
+      let changeStateOfcheckItem = await fetch('https://api.trello.com/1/cards/'+this.props.cardId+'/checkItem/'+e.id+'?state=incomplete&key=aa1fdd28be75dfa535d1b8f9d84fee66&token=2b0ac5dfa7ec2a58f3b93046881b38e34433596433f8a3dc67a1d00724544ee2',{method:'put'})
+       changeStateOfcheckItem =await changeStateOfcheckItem.json()
+       console.log(changeStateOfcheckItem);
+       console.log(this.state.checkItemsData);
+       let array=this.state.checkItemsData.map((item)=>{
+         if(item.id===changeStateOfcheckItem.id)
+           item.state=changeStateOfcheckItem.state
+           return item
+       })
+       console.log(array);
+       this.setState({
+         checkItemsData:array
+       })
+    }
+
+
+  }
 render(){
   return(
     <div className="checkItem-box">
       {
         this.state.checkItemsData.map((item)=>{
-          return(
-            <p>{item.name}<span><img className="delImage" src={this.state.delImage} alt="" onClick={(e)=>this.deleteCheckItem(item.id)}></img></span></p>
-           )
+          console.log(this.state.checkItemsData)
+          console.log(item);
+
+          return <p><span><input type="checkbox"  onChange={()=>this.changeState(item)}></input></span>{item.name}<span><img className="delImage" src={this.state.delImage} alt="" onClick={(e)=>this.deleteCheckItem(item.id)}></img></span></p>
         })
       }
       <input className="add-check-item-input" type="text" placeholder="add a Check Item...." onChange={this.addCheckItemsName} onKeyUp={this.addCheckItem}></input>
@@ -53,6 +82,3 @@ render(){
 }
 
 export default checkItem
-// <form>
-// <input type="checkbox"value={item.name}>{item.name}</input>
-// </form>

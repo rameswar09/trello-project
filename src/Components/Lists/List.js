@@ -9,7 +9,8 @@ class list extends Component{
     deleteImg:require('./Delete.png'),
     listName:[],
     addListCount:"",
-    default:""
+    default:"",
+    list:""
   }
    async componentDidMount(){
     let data = await fetch('https://api.trello.com/1/boards/8YcxH00I?fields=id,name&lists=open&list_fields=id,name,closed,idBoard,pos&key=aa1fdd28be75dfa535d1b8f9d84fee66&token=2b0ac5dfa7ec2a58f3b93046881b38e34433596433f8a3dc67a1d00724544ee2')
@@ -26,10 +27,13 @@ class list extends Component{
          console.log(this.state.listName);
          this.state.listName.push(addListOnTheBoard)
          this.setState({
-           listName:this.state.listName
-
+           listName:this.state.listName,
+           list:""
          })
     }
+  }
+  handelChange=(e)=>{
+    this.setState({list:e.target.value})
   }
  deleteList= async (name,id)=>{
   let finalList =this.state.listName.filter((item)=>item.id!==id)
@@ -50,7 +54,7 @@ class list extends Component{
               </div>
             )
           })}
-        <input className="add-list-text" type="text" placeholder="add a list .."  onKeyUp={this.addOneList}/>
+        <input className="add-list-text" type="text" placeholder="add a list .." value={this.state.list} onChange={this.handelChange} onKeyUp={this.addOneList}/>
       </div>
     );
   }

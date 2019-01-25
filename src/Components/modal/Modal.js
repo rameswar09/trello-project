@@ -23,7 +23,7 @@ class modal extends Component{
              return(
                <div className="check-list-box">
                  <p><span>Check List Name: </span>{item.name}</p>
-                 <CheckItems cardData={item}/>
+                 <CheckItems cardData={item} cardId={item.idCard}/>
              </div>
 
              )
